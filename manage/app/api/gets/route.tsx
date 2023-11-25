@@ -10,9 +10,17 @@ type MyObject = {
 export const GET = async (req: any) => {
 	try {
 		await connect();
-		const posts = await Post.find();
-		console.log(posts)
-		posts.map((x) => console.log(x.Age));
+		const posts:MyObject[] = await Post.find();
+		const title = posts[0];
+		console.log(Object.keys
+			(title));
+		
+		posts.forEach((jake)=>{
+			
+			console.log(jake);
+			console.log(jake.Title);
+		});
+		
 		// console.log(titles);
 		return new NextResponse("Hello I Am at route POSTS " + posts + JSON.stringify(posts), {status: 200});
 	} catch (error) {

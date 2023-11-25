@@ -1,8 +1,11 @@
-import React from 'react'
+import React from 'react';
+import Login from '@/Components/Login';
 
 const Cool = () => {
   return (
-    <div>Cool</div>
+    <div>Cool
+      <Login/>
+    </div>
   )
 }
 
