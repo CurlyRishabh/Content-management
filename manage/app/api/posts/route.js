@@ -5,7 +5,7 @@
 
  export const POST = async (req,res) =>{
      try{
-        // const {age,title} = await req.json(); 
+         const {Title , Description} = await req.json(); 
 
          console.log("post");
          console.log(age+ title);
@@ -18,8 +18,10 @@
 	// 			console.log(temp.Title);
     //             console.log(temp.Age)
 	// 		});
-    // res.json({message: "Data received successfully"});
-         return new NextResponse("Hello I Am at route Get " + JSON.stringify({sfsd:"sfsdf"}), {status: 200});
+    // res.json();
+         return new NextResponse("Hello I Am at route Get " + JSON.stringify({message: "Data received successfully"}), {
+				status: 200,
+			});
 
      }catch(error){
         return new NextResponse("Error in fetching "+ error ,{status: 500});
