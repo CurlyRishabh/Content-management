@@ -3,6 +3,8 @@ import React from "react";
 import {useCallback, useState} from "react";
 import Input from "@/Components/Input";
 import axios from "axios";
+import { signIn } from "next-auth/react";
+
 
 const Auth = () => {
 	const [email, setEmail] = useState("");
@@ -26,7 +28,19 @@ const Auth = () => {
 		}
   }, [email, name, password]);
 
+  const login = useCallback(async () => {
 
+		try {
+			console.log("login", signIn)
+			await signIn("credentials", {
+				email,
+				password
+			});
+		} catch (error) {
+			console.log("error in sign in", error);
+		}
+  }, [email, password]);
+		
 	return (
 		<div className="absolute block min-h-full min-w-full bg-[url('/images/hero.jpg')] bg-no-repeat bg-center bg-fixed bg-cover">
 			<div className="bg-black w-full h-full lg:bg-opacity-50  pb-10">
@@ -62,12 +76,12 @@ const Auth = () => {
 								onChange={(e: any) => setPassword(e.target.value)}
 							/>
 						</div>
-						<button onClick={register} className="bg-red-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 transition">
+						<button onClick={variant=== "login" ? login : register} className="bg-red-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 transition">
 							{variant === "login" ? "Login" : "Sign up"}
 						</button>
 						<p className="text-neutral-500 mt-12">
-							New to Netflix?
-							<span onClick={toggleVariant} className="text-white ml-1 hover:underline cursor-pointer">Sign up now.</span>
+							{variant === "login"? "New to netflix?" : "Existing user?"}
+							<span onClick={toggleVariant} className="text-white ml-1 hover:underline cursor-pointer">{variant === "login"? "Sign up now?" : "Login in." }</span>
 						</p>
 					</div>
 				</div>

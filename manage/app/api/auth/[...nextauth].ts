@@ -1,25 +1,25 @@
-import NextAuth from "next-auth/next";
+import NextAuth, {AuthOptions} from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import {compare} from "bcrypt";
-import prismadb from '../../../lib/prismadb'
+import prismadb from "../../../lib/prismadb";
 
-
-export default NextAuth({
+export const authOptions: AuthOptions = {
 	providers: [
 		Credentials({
 			id: "credentials",
-			name: "Credentals",
+			name: "Credentials",
 			credentials: {
 				email: {
 					label: "Email",
 					type: "text",
 				},
 				password: {
-					label: "password",
+					label: "Password",
 					type: "password",
 				},
 			},
 			async authorize(credentials) {
+				console.log("hello");
 				if (!credentials?.email || !credentials?.password) {
 					throw new Error("Email and password required");
 				}
@@ -41,19 +41,20 @@ export default NextAuth({
 				}
 
 				return user;
-			}
+			},
 		}),
 	],
-    pages: {
-        signIn:'/auth',
-    },
-    debug: process.env.NODE_ENV === 'development',
-    session:{
-        strategy: "jwt",
-    },
-jwt: {
-    secret: process.env.NEXTAUTH_JWT_SECRET,
-  },
-  secret: process.env.NEXTAUTH_SECRET
+	pages: {
+		signIn: "/auth",
+	},
+	debug: process.env.NODE_ENV === "development",
+	session: {
+		strategy: "jwt",
+	},
+	jwt: {
+		secret: process.env.NEXTAUTH_JWT_SECRET,
+	},
+	secret: process.env.NEXTAUTH_SECRET,
+};
 
-});
+export default NextAuth(authOptions);
