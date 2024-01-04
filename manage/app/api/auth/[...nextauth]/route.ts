@@ -1,7 +1,7 @@
 import NextAuth, {AuthOptions} from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import {compare} from "bcrypt";
-import prismadb from "../../../lib/prismadb";
+import prismadb from "../../../../lib/prismadb";
 
 export const authOptions: AuthOptions = {
 	providers: [
@@ -10,16 +10,16 @@ export const authOptions: AuthOptions = {
 			name: "Credentials",
 			credentials: {
 				email: {
-					label: "Email",
+					label: "email",
 					type: "text",
 				},
 				password: {
-					label: "Password",
+					label: "password",
 					type: "password",
 				},
 			},
 			async authorize(credentials) {
-				console.log("hello");
+				console.log(credentials);
 				if (!credentials?.email || !credentials?.password) {
 					throw new Error("Email and password required");
 				}
@@ -57,4 +57,6 @@ export const authOptions: AuthOptions = {
 	secret: process.env.NEXTAUTH_SECRET,
 };
 
-export default NextAuth(authOptions);
+export const handler = NextAuth(authOptions);
+
+export {handler as GET, handler as POST};

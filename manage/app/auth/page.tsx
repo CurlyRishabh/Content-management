@@ -31,10 +31,12 @@ const Auth = () => {
   const login = useCallback(async () => {
 
 		try {
-			console.log("login", signIn)
+			
 			await signIn("credentials", {
+				redirect: false,
 				email,
-				password
+				password,
+				callbackUrl: "/",
 			});
 		} catch (error) {
 			console.log("error in sign in", error);
